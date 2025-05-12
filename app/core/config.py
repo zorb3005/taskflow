@@ -1,13 +1,14 @@
-from pydantic import BaseSettings
+# app/core/config.py
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    DATABASE_URL: str = "postgresql://postgres:postgres@db:5432/taskforce"
-    JWT_SECRET_KEY: str = "your_jwt_secret_key"
-    JWT_ALGORITHM: str = "HS256"
-    JWT_EXPIRATION: int = 3600  # 1 hour
+    jwt_secret_key: str
+    jwt_algorithm: str
+    jwt_expiration: int
+    database_url: str
 
     class Config:
         env_file = ".env"
-        env_file_encoding = "utf-8"
+        env_file_encoding = "utf-8"  # Указываем кодировку файла .env
 
 settings = Settings()

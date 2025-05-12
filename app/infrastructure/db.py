@@ -1,17 +1,21 @@
-# app/infrastructure/db.py
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from app.core.config import settings  # настройки из .env
+from app.core.config import settings
 
-DATABASE_URL = settings.DATABASE_URL
+# Создаем строку подключения из переменной окружения
+SQLALCHEMY_DATABASE_URL = settings.DATABASE_URL
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})  # для SQLite
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+# Инициализируем движок базы данных
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
+# Создаем базовый класс для моделей
 Base = declarative_base()
 
-# Функция для создания сессии
+# Создаем сессию для работы с БД
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Функция для получения сессии
 def get_db():
     db = SessionLocal()
     try:

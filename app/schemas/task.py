@@ -1,19 +1,20 @@
+# app/schemas/task.py
 from pydantic import BaseModel
-from datetime import datetime
 from typing import Optional
 
 class TaskBase(BaseModel):
     title: str
-    description: str
-    status: str
-    due_date: Optional[datetime] = None
+    description: Optional[str] = None
 
 class TaskCreate(TaskBase):
     pass
 
-class TaskOut(TaskBase):
+class TaskUpdate(TaskBase):
+    is_completed: Optional[bool] = None
+
+class Task(TaskBase):
     id: int
-    created_at: datetime
+    is_completed: bool
 
     class Config:
         orm_mode = True
